@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart';
-import 'package:pdp_network/models/Post.dart';
+import 'package:pdp_network/models/post.dart';
 
 class Network1 {
 
   static String BASE = "dummy.restapiexample.com/api/v1";
   static Map<String, String> headers = {
-    "Access-Control-Allow-Origin": "*",
     "Content-type": "application/json;charset=utf-8",
   };
 
@@ -18,15 +17,21 @@ class Network1 {
   static String API_DELETE = "/delete"; //{id }
 
   //*Http Request
+
+
+  // ignore: non_constant_identifier_names
   static Future<String> GET(String api, Map<String, String> params) async {
-    var uri = Uri.http(BASE, api, params);
+    print(">>>SALOM");
+    print(BASE+api);
+    var uri = Uri.http(BASE, api); // http or https
+    print(">>>SALOM2");
     var response = await get(uri, headers: headers);
     if (response.statusCode == 200) {
       return response.body;
-    } else {
-      return null;
     }
+    return null;
   }
+
 
   //Post
   static Future<String> POST(String api, Map<String, String> params) async {
@@ -69,11 +74,11 @@ class Network1 {
   static Map<String, String> paramsCreate(Post post) {
     Map<String, String> params = new Map();
     params.addAll({
-      'id': post.id.toString(),
-      'employee_name': post.employeeName,
-      'employee_salary': post.employeeSalary.toString(),
-      'employee_age': post.employeeAge.toString(),
-      'profile_image': post.profileImage.toString(),
+
+      'name': post.employeeName,
+      'salary': post.employeeSalary.toString(),
+      'age': post.employeeAge.toString(),
+      // 'profile_image': post.profileImage.toString(),
     });
     return params;
   }
@@ -81,11 +86,11 @@ class Network1 {
   static Map<String, String> paramsUpdate(Post post) {
     Map<String, String> params = new Map();
     params.addAll({
-      'id': post.id.toString(),
-      'employee_name': post.employeeName,
-      'employee_salary': post.employeeSalary.toString(),
-      'employee_age': post.employeeAge.toString(),
-      'profile_image': post.profileImage.toString(),
+
+      'name': post.employeeName,
+      'salary': post.employeeSalary.toString(),
+      'age': post.employeeAge.toString(),
+      // 'profile_image': post.profileImage.toString(),
     });
     return params;
   }

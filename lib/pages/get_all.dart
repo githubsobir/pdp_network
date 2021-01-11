@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdp_network/services/network1.dart';
+import 'package:pdp_network/models/post.dart';
 
 
 class GetAll extends StatefulWidget {
@@ -11,13 +12,18 @@ class _GetAllState extends State<GetAll> {
   String data;
 
 
-  void _apiGetAll(){
-    Network1.GET(Network1.API_LIST, Network1.paramsEmpty()).then((response) => {
+  // void _apiGetAll(){
+  //   Network1.GET(Network1.API_LIST, Network1.paramsEmpty()).then((response) => {
+  //     _showResponse(response),
+  //   });
+  // }
+
+  void _apiPostCreate(Post post){
+    Network1.POST(Network1.API_CREATE, Network1.paramsCreate(post)).then((response) => {
+      print(response),
       _showResponse(response),
     });
   }
-
-
   void _showResponse(String datee) {
     setState(() {
       data = datee;
@@ -28,7 +34,9 @@ class _GetAllState extends State<GetAll> {
     // TODO: implement initState
 
     super.initState();
-    _apiGetAll();
+
+    var post = Post(employeeName:"test",employeeSalary: 123, employeeAge: 23);
+    _apiPostCreate(post);
 
   }
 
@@ -36,8 +44,10 @@ class _GetAllState extends State<GetAll> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Center(
-          child: Text(data != null ? data : "no connected"),
+        child: SafeArea(
+          child: Center(
+            child: Text(data != null ? data : "no connected"),
+          ),
         ),
       ),
 
